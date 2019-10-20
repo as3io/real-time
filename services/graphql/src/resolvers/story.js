@@ -11,9 +11,13 @@ module.exports = {
       return Story.create({ title, body });
     },
 
+    deleteStory: async (_, { input }) => {
+      await Story.deleteOne({ _id: input.id });
+      return 'ok';
+    },
+
     updateStoryTitle: async (_, { input }) => {
       const { id, value } = input;
-      console.log('value', value);
       // @todo how should projection be handled here.
       // @todo should this even pre-query?
       const story = await Story.findById(id);

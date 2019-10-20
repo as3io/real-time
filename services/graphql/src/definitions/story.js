@@ -9,6 +9,7 @@ extend type Query {
 extend type Mutation {
   createStory(input: CreateStoryMutationInput!): Story!
   updateStoryTitle(input: UpdateStoryTitleInput!): Story!
+  deleteStory(input: DeleteStoryInput!): String
 }
 
 type Story {
@@ -20,6 +21,10 @@ type Story {
 input CreateStoryMutationInput {
   title: String
   body: String
+}
+
+input DeleteStoryInput {
+  id: ObjectID!
 }
 
 input StoryQueryInput {
