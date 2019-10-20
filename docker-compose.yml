@@ -28,6 +28,8 @@ services:
     << : *node
     working_dir: /real-time/services/graphql
     entrypoint: ["/real-time/node_modules/.bin/gulp"]
+    depends_on:
+      - mongo-rs
     environment:
       <<: *env
       MONGO_DSN: mongodb://localhost:27017
@@ -36,5 +38,52 @@ services:
     ports:
       - "17420:80"
 
+  mongo-rs:
+    tty: true
+    image: mongo:4.2
+    depends_on:
+      - mongo01
+      - mongo02
+      - mongo03
+    volumes:
+      - ./scripts:/scripts
+    entrypoint: ["/scripts/init-rs.sh"]
+
+  mongo01:
+    tty: true
+    image: mongo:4.2
+    command: "--bind_ip_all --replSet rs0"
+    volumes:
+      - mongo01db:/data/db
+      - mongo01config:/data/configdb
+    ports:
+      - "30001:27017"
+
+  mongo02:
+    tty: true
+    image: mongo:4.2
+    command: "--bind_ip_all --replSet rs0"
+    volumes:
+      - mongo02db:/data/db
+      - mongo02config:/data/configdb
+    ports:
+      - "30002:27017"
+
+  mongo03:
+    tty: true
+    image: mongo:4.2
+    command: "--bind_ip_all --replSet rs0"
+    volumes:
+      - mongo03db:/data/db
+      - mongo03config:/data/configdb
+    ports:
+      - "30003:27017"
+
 volumes:
   yarn-cache: {}
+  mongo01db: {}
+  mongo02db: {}
+  mongo03db: {}
+  mongo01config: {}
+  mongo02config: {}
+  mongo03config: {}
