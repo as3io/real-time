@@ -4,6 +4,9 @@
   "author": "Jacob Bare <jacob@limit0.io>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "serve": "gulp"
+  },
   "dependencies": {
     "@godaddy/terminus": "^4.2.0",
     "apollo-server-express": "^2.9.6",
