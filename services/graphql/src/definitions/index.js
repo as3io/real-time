@@ -14,6 +14,10 @@ type Mutation {
   ping: String!
 }
 
+type Subscription {
+  ping: String!
+}
+
 ${story}
 
 `;

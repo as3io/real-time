@@ -12,6 +12,10 @@ extend type Mutation {
   deleteStory(input: DeleteStoryInput!): String
 }
 
+extend type Subscription {
+  storyCreated: Story!
+}
+
 type Story {
   id: ObjectID!
   title: String

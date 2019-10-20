@@ -1,7 +1,22 @@
+const pubsub = require('../pubsub');
+const { STORY_CREATED } = require('../change-events');
 const Story = require('../mongoose/models/story');
 const notFound = require('../errors/not-found');
 
 module.exports = {
+  /**
+   *
+   */
+  Subscription: {
+    storyCreated: {
+      // Additional event labels can be passed to asyncIterator creation
+      subscribe: () => {
+        console.log('subscribe');
+        return pubsub.asyncIterator([STORY_CREATED]);
+      },
+    },
+  },
+
   /**
    *
    */
