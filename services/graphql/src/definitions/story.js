@@ -8,6 +8,7 @@ extend type Query {
 
 extend type Mutation {
   createStory(input: CreateStoryMutationInput!): Story!
+  updateStoryTitle(input: UpdateStoryTitleInput!): Story!
 }
 
 type Story {
@@ -23,6 +24,11 @@ input CreateStoryMutationInput {
 
 input StoryQueryInput {
   id: ObjectID!
+}
+
+input UpdateStoryTitleInput {
+  id: ObjectID!
+  value: String
 }
 
 `;
