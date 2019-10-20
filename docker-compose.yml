@@ -32,7 +32,7 @@ services:
       - mongo-rs
     environment:
       <<: *env
-      MONGO_DSN: mongodb://localhost:27017
+      MONGO_DSN: mongodb://mongo01:27017,mongo02:27017,mongo03:27017/real-time?replicaSet=rs0
       PORT: 80
       EXPOSED_PORT: 17420
     ports:
