@@ -1,0 +1,40 @@
+version: '3.7'
+
+x-env-defaults: &env
+  YARN_CACHE_FOLDER: /.yarn-cache
+  NODE_ENV: development
+
+x-node-defaults: &node
+  tty: true
+  init: true
+  image: node:10.16.3
+  entrypoint: ["node"]
+  working_dir: /real-time
+  volumes:
+    - .:/real-time:cached
+    - ./node_modules:/real-time/node_modules:delegated
+    - yarn-cache:/.yarn-cache
+  environment:
+    <<: *env
+
+services:
+  commands:
+    << : *node
+    working_dir: /real-time
+    entrypoint: ["tail"]
+    command: ["-f", "/dev/null"]
+
+  graphql:
+    << : *node
+    working_dir: /real-time/services/graphql
+    entrypoint: ["/real-time/node_modules/.bin/gulp"]
+    environment:
+      <<: *env
+      MONGO_DSN: mongodb://localhost:27017
+      PORT: 80
+      EXPOSED_PORT: 17420
+    ports:
+      - "17420:80"
+
+volumes:
+  yarn-cache: {}
