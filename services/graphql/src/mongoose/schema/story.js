@@ -10,4 +10,6 @@ const schema = new Schema({
   },
 });
 
+schema.index({ title: 1 }, { collation: { locale: 'en_US' } });
+
 module.exports = schema;
