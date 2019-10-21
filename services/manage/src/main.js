@@ -9,6 +9,9 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
-  apolloProvider: createProvider({ uri: 'http://localhost:17420' }),
+  apolloProvider: createProvider({
+    uri: 'http://localhost:17420/graphql',
+    subscriptionsUri: 'ws://localhost:17420/subscriptions',
+  }),
   render: h => h(App),
 }).$mount('#app');

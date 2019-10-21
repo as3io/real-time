@@ -1,11 +1,11 @@
 import VueApollo from 'vue-apollo';
 import createApolloClient from './create-client';
 
-export default ({ uri } = {}) => {
-  if (!uri) {
-    throw new Error('The uri option is required to create the Apollo Provider.');
+export default ({ uri, subscriptionsUri } = {}) => {
+  if (!origin || !subscriptionsUri) {
+    throw new Error('The uri and subscriptionsUri options are required to create the Apollo Provider.');
   }
   return new VueApollo({
-    defaultClient: createApolloClient({ uri }),
+    defaultClient: createApolloClient({ uri, subscriptionsUri }),
   });
 };
