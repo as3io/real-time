@@ -10,4 +10,5 @@ module.exports = mongoose.createConnection(MONGO_DSN, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
