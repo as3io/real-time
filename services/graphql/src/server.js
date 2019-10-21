@@ -1,6 +1,7 @@
 const express = require('express');
+const http = require('http');
 const { ApolloServer } = require('apollo-server-express');
-const schema = require('../schema');
+const schema = require('./schema');
 
 const app = express();
 
@@ -15,4 +16,7 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app, path: '/' });
 
-module.exports = app;
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
+module.exports = { httpServer, apolloServer: server };
