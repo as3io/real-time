@@ -14,6 +14,7 @@
         <router-link :to="{ name: 'story', params: { id: story.id }}">
           {{ story.title }}
         </router-link>
+        <small>{{ story.id }}</small>
       </li>
     </ul>
   </div>
@@ -26,7 +27,7 @@ import gql from 'graphql-tag';
 const query = gql`
 
 query ListStories {
-  stories(input: { limit: 25, sort: { field: title } }) {
+  stories(input: { limit: 100, sort: { field: title } }) {
     id
     title
   }
@@ -70,6 +71,42 @@ export default {
       fetchPolicy: 'cache-and-network',
       error(e) {
         this.error = e;
+      },
+      subscribeToMore: {
+        document: gql`
+          subscription StoryCreated {
+            storyCreated {
+              id
+              title
+            }
+          }
+        `,
+        updateQuery: (previousResult, { subscriptionData }) => {
+          const { stories } = previousResult;
+          const { storyCreated } = subscriptionData.data;
+          if (stories.find(story => story.id === storyCreated.id)) {
+            return previousResult;
+          }
+
+          console.log('Adding story', storyCreated.id);
+          return {
+            stories: [...stories, storyCreated],
+          };
+        },
+      },
+    },
+    $subscribe: {
+      deleteStory: {
+        query: gql`
+          subscription StoryDeleted {
+            storyDeleted
+          }
+        `,
+        result({ data }) {
+          const { storyDeleted: id } = data;
+          console.log('Story deleted', id);
+          this.stories = this.stories.filter(story => story.id !== id);
+        },
       },
     },
   },
