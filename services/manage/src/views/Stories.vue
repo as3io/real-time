@@ -11,7 +11,9 @@
         v-for="(story) in stories"
         :key="story.id"
       >
-        {{ story.title }}
+        <router-link :to="{ name: 'story', params: { id: story.id }}">
+          {{ story.title }}
+        </router-link>
       </li>
     </ul>
   </div>
