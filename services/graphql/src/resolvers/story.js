@@ -2,6 +2,8 @@ const pubsub = require('../pubsub');
 const { STORY_CREATED } = require('../change-events');
 const Story = require('../mongoose/models/story');
 const notFound = require('../errors/not-found');
+const applyCollation = require('../utils/apply-collation');
+const applySort = require('../utils/apply-sort');
 
 module.exports = {
   /**
@@ -47,5 +49,16 @@ module.exports = {
    */
   Query: {
     story: (_, { input }) => Story.findById(input.id),
+
+    stories: (_, { input }) => {
+      const { limit, skip, sort } = input;
+      const options = {
+        limit,
+        skip,
+        sort: applySort(sort),
+        collation: applyCollation(sort),
+      };
+      return Story.find({}, null, options);
+    },
   },
 };

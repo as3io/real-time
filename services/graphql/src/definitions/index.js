@@ -18,6 +18,11 @@ type Subscription {
   ping: String!
 }
 
+enum SortDirectionEnum {
+  asc
+  desc
+}
+
 ${story}
 
 `;
