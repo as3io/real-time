@@ -10,11 +10,12 @@ const server = new ApolloServer({
   subscriptions: {
     path: '/subscriptions',
   },
-  context: async ({ req }) => {
-    // Simulate a logged-in user.
-    const userEmail = req.get('x-user-email');
-    return { userEmail };
-  },
+  // @todo This fails on websocket connection, which makes sense.
+  // context: async ({ req }) => {
+  //   // Simulate a logged-in user.
+  //   const userEmail = req.get('x-user-email');
+  //   return { userEmail };
+  // },
 });
 
 server.applyMiddleware({ app, path: '/graphql' });
