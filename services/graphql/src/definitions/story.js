@@ -3,14 +3,14 @@ const gql = require('graphql-tag');
 module.exports = gql`
 
 extend type Query {
-  story(input: StoryQueryInput!): Story
-  stories(input: StoriesQueryInput = {}): [Story!]!
+  story(input: QueryStoryInput!): Story
+  stories(input: QueryStoriesInput = {}): [Story!]!
 }
 
 extend type Mutation {
   createStory(input: CreateStoryMutationInput!): Story!
-  updateStoryTitle(input: UpdateStoryTitleInput!): Story!
-  deleteStory(input: DeleteStoryInput!): String
+  updateStoryTitle(input: UpdateStoryTitleMutationInput!): Story!
+  deleteStory(input: DeleteStoryMutationInput!): String
 }
 
 extend type Subscription {
@@ -33,17 +33,17 @@ input CreateStoryMutationInput {
   body: String
 }
 
-input DeleteStoryInput {
+input DeleteStoryMutationInput {
   id: ObjectID!
 }
 
-input StoriesQueryInput {
+input QueryStoriesInput {
   limit: Int = 10
   skip: Int
   sort: StorySortInput = {}
 }
 
-input StoryQueryInput {
+input QueryStoryInput {
   id: ObjectID!
 }
 
@@ -52,7 +52,7 @@ input StorySortInput {
   order: SortDirectionEnum = asc
 }
 
-input UpdateStoryTitleInput {
+input UpdateStoryTitleMutationInput {
   id: ObjectID!
   value: String
 }
