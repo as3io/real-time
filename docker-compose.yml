@@ -38,6 +38,18 @@ services:
     ports:
       - "17420:80"
 
+  manage:
+    << : *node
+    working_dir: /real-time/services/manage
+    entrypoint: ["/real-time/node_modules/.bin/vue-cli-service"]
+    command: ["serve", "--port", "17421"]
+    depends_on:
+      - graphql
+    environment:
+      <<: *env
+    ports:
+      - "17421:17421"
+
   mongo-rs:
     tty: true
     image: mongo:4.2
