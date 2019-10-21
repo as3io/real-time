@@ -1,5 +1,5 @@
 const pubsub = require('../pubsub');
-const { STORY_CREATED } = require('../change-events');
+const { STORY_CREATED, STORY_DELETED } = require('../change-events');
 const Story = require('../mongoose/models/story');
 const notFound = require('../errors/not-found');
 const applyCollation = require('../utils/apply-collation');
@@ -13,8 +13,15 @@ module.exports = {
     storyCreated: {
       // Additional event labels can be passed to asyncIterator creation
       subscribe: () => {
-        console.log('subscribe');
+        console.log('storyCreated subscribe');
         return pubsub.asyncIterator([STORY_CREATED]);
+      },
+    },
+    storyDeleted: {
+      // Additional event labels can be passed to asyncIterator creation
+      subscribe: () => {
+        console.log('storyDeleted subscribe');
+        return pubsub.asyncIterator([STORY_DELETED]);
       },
     },
   },

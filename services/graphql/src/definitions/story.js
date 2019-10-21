@@ -15,6 +15,7 @@ extend type Mutation {
 
 extend type Subscription {
   storyCreated: Story!
+  storyDeleted: ObjectID!
 }
 
 enum StorySortFieldEnum {
