@@ -66,6 +66,8 @@ services:
     volumes:
       - mongo02db:/data/db
       - mongo02config:/data/configdb
+    depends_on:
+      - mongo01
     ports:
       - "30002:27017"
 
@@ -76,6 +78,8 @@ services:
     volumes:
       - mongo03db:/data/db
       - mongo03config:/data/configdb
+    depends_on:
+      - mongo01
     ports:
       - "30003:27017"
 
